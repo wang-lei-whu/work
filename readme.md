@@ -1,4 +1,1 @@
-read me
-ewqeqwrwq
-bijibne
-hubb
+本仓库用于学习和开发PSO算法的C++程序。
