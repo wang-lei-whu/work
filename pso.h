@@ -2,10 +2,10 @@
 #include "Eigen/Dense"
 using Eigen::MatrixXd;
 
-double rosenBrock(double X){
-    printf("rosenbrock\n");
-    return X;
-}
+class testFunc{
+   public:
+    static double rosenBrock(double X);
+};
 
 class PSO
 {
@@ -16,8 +16,6 @@ public:
     MatrixXd P; // doubleMatrixXd P(3,6);/double
 };
 
-PSO::PSO(int n_dim){
-    this -> n_dim=n_dim;
-}
+
 
 
