@@ -8,8 +8,11 @@
                 "-fdiagnostics-color=always",
                 "-g",
                 "${file}",
+                "-I",
+                "/usr/local/include/eigen3/", //生成时调用eigen3头文件
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}"
+                "${fileDirname}/${fileBasenameNoExtension}",
+                "-std=c++11"
             ],
             "options": {
                 "cwd": "${fileDirname}"
