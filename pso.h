@@ -5,14 +5,14 @@ using Eigen::MatrixXd;
 class testFunc
 {
 public:
-    static double rosenBrock(double X);
+    static MatrixXd rosenBrock(MatrixXd X);
 };
 
 class PSO
 {
 public:
-    PSO(int n_dim);
-    double (*func)(MatrixXd X);
+    PSO(MatrixXd(*func)(MatrixXd X), int n_dim, int pop, int max_iter, MatrixXd lb, MatrixXd ub, float w0, float w_min, float c1, float c2, bool verbose);
+    MatrixXd(*func)(MatrixXd X);
     int n_dim;
     int pop;
     int max_iter;
@@ -21,8 +21,8 @@ public:
     float w;
     float w0;
     float w_min;
-    float c1;
-    float c2;
+    float cp;
+    float cg;
     bool verbose;
 
     MatrixXd pbest_x;
@@ -31,7 +31,7 @@ public:
     MatrixXd gbest_y;    
 
     
-private:
+
     MatrixXd X;
     MatrixXd Y;
     MatrixXd V;
@@ -39,6 +39,7 @@ private:
     int update_V();
     int update_X();
     MatrixXd cal_Y();
+    MatrixXd cal_Y(MatrixXd X);
     int update_pbest();
     int update_gbest();
     int run();

@@ -44,7 +44,13 @@
         "stdexcept": "cpp",
         "streambuf": "cpp",
         "cinttypes": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "cstring": "cpp",
+        "ctime": "cpp",
+        "complex": "cpp",
+        "list": "cpp",
+        "map": "cpp",
+        "iomanip": "cpp"
     },
     "cSpell.words": [
         "rosenbrock"
