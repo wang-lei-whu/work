@@ -1,20 +1,4 @@
 #include "pso.h"
-// using namespace std;
-
-// int main()
-// {
-//     MatrixXd X(1, 1);
-//     X << 1;
-//     MatrixXd Y = testFunc::rosenBrock(X);
-//     PSO m(0);
-//     cout << Y << endl;
-//     cout << "hello world " << endl;
-//     return 0;
-// };
-
-#include <iostream>
-#include <random>
-#include <Eigen/Eigen>
 // #include <ctime>
 using namespace std;
 using namespace Eigen;

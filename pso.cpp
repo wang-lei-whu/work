@@ -20,7 +20,7 @@ PSO::PSO(MatrixXd(*func)(MatrixXd X), int n_dim, int pop, int max_iter, MatrixXd
     cg = c2;
     this->verbose = verbose;
     srand((unsigned)time(NULL)); //时间做随机种子
-    X = (MatrixXd::Random(pop,n_dim)).array() *2; //正态分布随机矩阵
+    X = (MatrixXd::Random(pop,n_dim)).array() *2; //正态分布随机矩阵，需要修改
     V = (MatrixXd::Random(pop,n_dim)).array() *1;
     Y = MatrixXd::Constant(pop,n_dim,inf);
     pbest_x = X;
@@ -39,6 +39,25 @@ MatrixXd PSO::cal_Y(MatrixXd X1){
 
 }
 
+void PSO::update_w(){
+    ;
+}
+int PSO::update_V(){
+    ;
+}
+int PSO::update_X(){
+    ;
+}
+
+int PSO::update_pbest(){
+    ;
+}
+int PSO::update_gbest(){
+    ;
+}
+int PSO::run(){
+    ;
+}
 
 MatrixXd testFunc::rosenBrock(MatrixXd X)
 {
