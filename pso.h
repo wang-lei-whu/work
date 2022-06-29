@@ -1,11 +1,13 @@
 #include <iostream>
+#include "random"
 #include "Eigen/Dense"
 using Eigen::MatrixXd;
 
-class testFunc
+class toolFunc
 {
 public:
     static MatrixXd rosenBrock(MatrixXd X);
+    static MatrixXd random(int pop, int n_dim, MatrixXd lb, MatrixXd ub);
 };
 
 class PSO
@@ -28,18 +30,17 @@ public:
     MatrixXd pbest_x;
     MatrixXd pbest_y;
     MatrixXd gbest_x;
-    MatrixXd gbest_y;    
+    double gbest_y;    
 
     
 
     MatrixXd X;
     MatrixXd Y;
     MatrixXd V;
-    void update_w();
+    void update_w(int _iter);
     int update_V();
     int update_X();
     MatrixXd cal_Y();
-    MatrixXd cal_Y(MatrixXd X);
     int update_pbest();
     int update_gbest();
     int run();
