@@ -4,6 +4,7 @@
 #include <ctime>
 #define inf DBL_MAX
 
+
 // PSO类的构造函数
 PSO::PSO(MatrixXd(*func)(MatrixXd X), int n_dim, int pop, int max_iter, MatrixXd lb, MatrixXd ub, float w0, float w_min, float c1, float c2, bool verbose)
 {
