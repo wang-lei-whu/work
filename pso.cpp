@@ -5,6 +5,7 @@
 #include <ctime>
 #define inf DBL_MAX
 using namespace std;
+
 // PSO类的构造函数
 PSO::PSO(MatrixXd (*func)(MatrixXd X), int n_dim, int pop, int max_iter, MatrixXd lb, MatrixXd ub, float w0, float w_min, float c1, float c2, bool verbose)
 {
@@ -27,7 +28,7 @@ PSO::PSO(MatrixXd (*func)(MatrixXd X), int n_dim, int pop, int max_iter, MatrixX
     V = toolFunc::random(pop,n_dim, -v_highest, v_highest);
     // Y = MatrixXd::Constant(pop, n_dim, inf);
     pbest_x = X;
-    Y = cal_Y();
+    Y=cal_Y();
     pbest_y = MatrixXd::Constant(pop, 1, inf);
     gbest_x = pbest_x.colwise().mean();
     gbest_y = inf;
@@ -35,27 +36,30 @@ PSO::PSO(MatrixXd (*func)(MatrixXd X), int n_dim, int pop, int max_iter, MatrixX
 
 MatrixXd PSO::cal_Y()
 {
-    return func(X);
+    Y = func(X);
+    return Y;
 }
 
 void PSO::update_w(int iter)
 {
-    w = w0 - (w0 - w_min) * iter / max_iter;
+    w = w0 - (w0 - w_min) * iter / (max_iter-1);
 }
 int PSO::update_V()
 {
-    cout<<"V:\n"<<V<<endl;
+    // cout<<"V:\n"<<V<<endl;
     MatrixXd r1 = MatrixXd::Random(pop,n_dim).array().abs();
-    cout<<"r1:\n"<<r1<<endl;
+    // cout<<"r1:\n"<<r1<<endl;
     MatrixXd r2 = MatrixXd::Random(pop,n_dim).array().abs();
-    cout<<"r2:\n"<<r2<<endl;
-    cout<<"r1.cwiseProduct(gbest_x-X)\n"<<MatrixXd::Constant(pop,n_dim,cg)-X<<endl;
-    V = w * V+cp*(r1.cwiseProduct(pbest_x-X))+cg*(r2.cwiseProduct(MatrixXd::Constant(pop,n_dim,cg)-X)); //速度转移公式
-    cout<<"updated V:\n"<<V<<endl;
+    // cout<<"r2:\n"<<r2<<endl;
+    // cout<<"r1.cwiseProduct(gbest_x-X)\n"<<MatrixXd::Constant(pop,n_dim,cg)-X<<endl;
+    V = w * V+cp*(r1.cwiseProduct(pbest_x-X))+cg*(r2.cwiseProduct(gbest_x.replicate(pop,1)-X)); //速度转移公式
+    // cout<<"updated V:\n"<<V<<endl;
     return 0;
 }
 int PSO::update_X()
 {
+    X=X+V;
+    X= X.cwiseMin(ub.replicate(pop,1)).cwiseMax(lb.replicate(pop,1));
     return 0;
 }
 
@@ -69,7 +73,15 @@ int PSO::update_gbest()
 }
 int PSO::run()
 {
+    for(int iter_num = 0;iter_num<max_iter;iter_num++){
     update_V();
+    update_w(iter_num);
+    update_X();
+    cal_Y();
+    // update_pbest();
+    // update_gbest();
+    cout<<"X in step"<<iter_num<<": \n"<<X<<"\n"<<endl;
+    }
     return 0;
 }
 
@@ -85,13 +97,17 @@ MatrixXd toolFunc::rosenBrock(MatrixXd X)
 
 MatrixXd toolFunc::random(int pop, int n_dim, MatrixXd lb, MatrixXd ub)
 {
+    //"随机初始化一个MatrixXd对象"
     MatrixXd m = MatrixXd::Zero(pop, n_dim);
     default_random_engine e(time(0));
     for (int i = 0; i < n_dim; i++)
     {
-        uniform_real_distribution<double> n(lb(i, 0), ub(i, 0));
+        // std::cout<<lb(i,0)<<std::endl;
+        uniform_real_distribution<double> n(lb(0, i), ub(0, i));
         m.col(i) = m.col(i).unaryExpr([&n, &e](double dummy)
                                       { return n(e); });
+        // std::cout<<m.col(i)<<std::endl;
+
     };
     return m;
 }

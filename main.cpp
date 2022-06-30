@@ -11,14 +11,17 @@ int main()
 
      //
      int dim = 2;
-     MatrixXd lb = MatrixXd::Constant(dim, 1, -2);
+     MatrixXd lb = MatrixXd::Constant(1, dim, -2);
      // lb(1, 0) = -4;
-     MatrixXd ub = MatrixXd::Constant(dim, 1, 2);
+     MatrixXd ub = MatrixXd::Constant(1, dim, 2);
      // ub(1, 0) = 4;     
-
-     MatrixXd m = toolFunc::random(5, dim,lb, ub);
-     MatrixXd m1 = MatrixXd::Zero(5,dim);
-     cout << 1*m.cwiseProduct(m1) << endl;
+     
+     MatrixXd m = 1.5 * toolFunc::random(5, dim,lb, ub);
+     // MatrixXd m2 = m.cwiseMin(ub.replicate(5,1)).cwiseMax(lb.replicate(5,1));
+     // cout << m <<"\n"<< endl;
+     // cout << m2 << endl;
+     // MatrixXd m1 = MatrixXd::Zero(5,dim);
+     //cout << 1*m.cwiseProduct(m1) << endl; //点乘
      // MatrixXd m = MatrixXd::Zero(10, dim);
      // m = toolFunc::random(10, dim,lb, ub);
      // cout << m << endl;
@@ -44,7 +47,7 @@ int main()
      // cout << testFunc::rosenBrock(m) << endl;
      // cout << test << endl;
 
-     PSO pso(toolFunc::rosenBrock, dim, 5, 1, lb, ub, 0.8, 0.1, 0.6, 0.5, true);
+     PSO pso(toolFunc::rosenBrock, dim, 5, 3, lb, ub, 0.8, 0.1, 0.6, 0.5, true);
      pso.run();
      cout << "pso.X:\n"
           << pso.X << endl;
