@@ -47,7 +47,7 @@ int main()
      // cout << testFunc::rosenBrock(m) << endl;
      // cout << test << endl;
 
-     PSO pso(toolFunc::rosenBrock, dim, 5, 3, lb, ub, 0.8, 0.1, 0.6, 0.5, true);
+     PSO pso(toolFunc::rosenBrock, dim, 5000, 3000, lb, ub, 0.8, 0.1, 0.6, 0.5, true);
      pso.run();
      cout << "pso.X:\n"
           << pso.X << endl;
