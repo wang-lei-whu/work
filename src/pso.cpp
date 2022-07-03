@@ -1,11 +1,14 @@
 #include "pso.h"
+#include "tools.h"
 #include "float.h"
-#include "iostream"
 #include "cassert"
 #include <ctime>
+#include <chrono>
 #define inf DBL_MAX
-using namespace std;
 
+using namespace std;
+using namespace chrono;
+typedef std::chrono::high_resolution_clock Clock;
 // PSO类的构造函数
 PSO::PSO(MatrixXd (*func)(MatrixXd X), int n_dim, int pop, int max_iter, MatrixXd lb, MatrixXd ub, float w0, float w_min, float c1, float c2, bool verbose)
 {
@@ -72,59 +75,49 @@ void PSO::update_pbest()
 }
 void PSO::update_gbest()
 {
-    MatrixXd::Index maxRow, maxCol;
     MatrixXd::Index minRow, minCol;
-
     double present_best_y = pbest_y.minCoeff(&minRow, &minCol);
     if (gbest_y > present_best_y)
     {
         gbest_x = X.row(minRow);
         gbest_y = present_best_y;
     };
-
-    // cout<<X<<endl;
-    // cout<<Y<<endl;
-    // cout<<"\n gbest_x "<<gbest_x<<endl;
-    // cout<<"\n gbest_y "<<gbest_y<<endl;
 }
+
+// pso优化执行函数 verbose默认为true
 int PSO::run()
-{
+{   
+    cout << "PSO process begin!\n"
+         << endl;
     for (int iter_num = 0; iter_num < max_iter; iter_num++)
-    {
+    {        
+        auto t1 = Clock::now(); //计时
         update_V();
+        auto t2 = Clock::now(); 
         update_w(iter_num);
+        auto t3 = Clock::now();
         update_X();
+        auto t4 = Clock::now();
         cal_Y();
+        auto t5 = Clock::now();
         update_pbest();
+        auto t6 = Clock::now();
         update_gbest();
-        // cout << "X in step" << iter_num << ": \n"
-        //      << X << "\n"
-        //      << endl;
+        auto t7 = Clock::now();
+        if (verbose)
+        {
+            cout << "Step " << iter_num << " : Best(minimum) value : " << gbest_y << " at " << gbest_x << " \n";
+        
+        std::cout <<"it cost: "<< std::chrono::duration_cast<std::chrono::nanoseconds>(t2 - t1).count()/1e+6 <<" ms in update_V();"<< '\n';
+        std::cout <<"it cost: "<< std::chrono::duration_cast<std::chrono::nanoseconds>(t3 - t2).count()/1e+6 <<" ms in update_w();"<< '\n';
+        std::cout <<"it cost: "<< std::chrono::duration_cast<std::chrono::nanoseconds>(t4 - t3).count()/1e+6 <<" ms in update_X();"<< '\n';
+        std::cout <<"it cost: "<< std::chrono::duration_cast<std::chrono::nanoseconds>(t5 - t4).count()/1e+6 <<" ms in cal_Y();"<< '\n';
+        std::cout <<"it cost: "<< std::chrono::duration_cast<std::chrono::nanoseconds>(t6 - t5).count()/1e+6 <<" ms in update_pbest();"<< '\n';
+        std::cout <<"it cost: "<< std::chrono::duration_cast<std::chrono::nanoseconds>(t7 - t6).count()/1e+6 <<" ms in update_gbest();"<< '\n';
+        }
     }
+
+    cout << "PSO process end!\n"
+         << endl;
     return 0;
-}
-
-MatrixXd toolFunc::rosenBrock(MatrixXd X)
-{
-    // cout << "rosenbrock\n"
-    //      << endl;
-    // std::cout << X << std::endl;
-    MatrixXd term1 = X.col(1) - X.col(0);
-    // std::cout << term1 << std::endl;
-    MatrixXd term2 = X.col(0) - MatrixXd::Constant(X.rows(), 1, 1);
-    return 10 * term1.cwiseProduct(term1) + term2.cwiseProduct(term2);
-}
-
-MatrixXd toolFunc::random(int pop, int n_dim, MatrixXd lb, MatrixXd ub)
-{
-    //"随机初始化一个MatrixXd对象"
-    MatrixXd m = MatrixXd::Zero(pop, n_dim);
-    default_random_engine e(time(0));
-    for (int i = 0; i < n_dim; i++)
-    {
-        uniform_real_distribution<double> n(lb(0, i), ub(0, i));
-        m.col(i) = m.col(i).unaryExpr([&n, &e](double dummy)
-                                      { return n(e); });
-    };
-    return m;
 }

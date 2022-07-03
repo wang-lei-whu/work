@@ -13,11 +13,11 @@ include_directories(
 # 加载第三方库，暂无
 
 # 编译本地库
-add_library(pso SHARED pso.cpp) # 动态库
+add_library(pso SHARED tools.cpp pso.cpp) # 动态库
 SET_TARGET_PROPERTIES(pso PROPERTIES VERSION 1.0 SOVERSION 1)
 
-add_library(pso_static STATIC pso.cpp) # 静态库
-SET_TARGET_PROPERTIES(pso_static PROPERTIES OUTPUT_NAME "pso")
+# add_library(pso_static STATIC pso.cpp) # 静态库
+# SET_TARGET_PROPERTIES(pso_static PROPERTIES OUTPUT_NAME "pso")
 
 # 编译并链接主程序
 link_directories(${PROJECT_SOURCE_DIR}/lib) #本地库路径，放在addadd_executable前
