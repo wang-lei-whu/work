@@ -2,7 +2,7 @@
 #include <ctime>
 
 using namespace std;
-using namespace Eigen;
+
 
 int main()
 {
@@ -17,6 +17,18 @@ int main()
      // ub(1, 0) = 4;     
      
      MatrixXd m = 1.5 * toolFunc::random(5, dim,lb, ub);
+     MatrixXd m1= MatrixXd::Constant(5, dim, 1);
+     MatrixXd::Index maxRow, maxCol;
+	MatrixXd::Index minRow, minCol;
+     double min = m.minCoeff(&minRow,&minCol);
+     cout <<"m\n"<< m <<"\n"<< endl;
+     cout <<"min\n"<< min <<"\n"<< endl;
+     cout <<"min x1\n"<< minRow <<"\n min x2\n"<< minCol <<"\n"<< endl;
+     m.row(0)=MatrixXd::Constant(1, dim, 0);
+     cout <<"m1\n"<< m <<"\n"<< endl;
+     ArrayXXd m2 = (m.array() < m1.array()).cast<double>();
+     cout <<"m2\n"<< m2 <<"\n"<< endl;
+     cout<<m2.select(m,m1)<<endl;
      // MatrixXd m2 = m.cwiseMin(ub.replicate(5,1)).cwiseMax(lb.replicate(5,1));
      // cout << m <<"\n"<< endl;
      // cout << m2 << endl;
@@ -41,20 +53,9 @@ int main()
      // MatrixXd m2 = (m.array() - m.mean()) * (m.array() - m.mean());
      // cout << "std: " << sqrt(m2.sum() / (m2.size() - 1)) << endl;
 
-     // MatrixXd (*func)(MatrixXd X);
-     // func = testFunc::rosenBrock;
-     // MatrixXd test = func(m);
-     // cout << testFunc::rosenBrock(m) << endl;
-     // cout << test << endl;
 
-     PSO pso(toolFunc::rosenBrock, dim, 5000, 3000, lb, ub, 0.8, 0.1, 0.6, 0.5, true);
+     PSO pso(toolFunc::rosenBrock, dim, 500, 100, lb, ub, 0.8, 0.1, 0.6, 0.5, true);
      pso.run();
-     cout << "pso.X:\n"
-          << pso.X << endl;
-     cout << "pso.Y:\n"
-          << pso.Y << endl;
-     cout << "pso.V:\n"
-          << pso.V << endl;
      cout << "pso.gbest_y:\n"
           << pso.gbest_y << endl;
      cout << "pso.gbest_x:\n"

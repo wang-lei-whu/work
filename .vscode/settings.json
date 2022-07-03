@@ -50,7 +50,8 @@
         "complex": "cpp",
         "list": "cpp",
         "map": "cpp",
-        "iomanip": "cpp"
+        "iomanip": "cpp",
+        "dense": "cpp"
     },
     "cSpell.words": [
         "rosenbrock"

@@ -2,7 +2,7 @@
 #include "random"
 #include "Eigen/Dense"
 using Eigen::MatrixXd;
-
+using namespace Eigen;
 class toolFunc
 {
 public:
@@ -38,10 +38,10 @@ public:
     MatrixXd Y;
     MatrixXd V;
     void update_w(int _iter);
-    int update_V();
-    int update_X();
+    void update_V();
+    void update_X();
     MatrixXd cal_Y();
-    int update_pbest();
-    int update_gbest();
+    void update_pbest();
+    void update_gbest();
     int run();
 };

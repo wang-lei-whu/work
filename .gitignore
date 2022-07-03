@@ -1,3 +1,5 @@
 main
 pso
 **.log
+**.py
+sm_optimized/**
