@@ -4,3 +4,4 @@ pso
 **.py
 sm_optimized/**
 build/
+lib/lib**
