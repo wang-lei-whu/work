@@ -11,7 +11,7 @@
         sudo apt-get install cmake
     ```
 ## 编译可执行文件
-本项目可以使用cmake(version＞2.8.12)编译，同时附带vscode设置文件用于简单的断点调试。
+本项目可以使用cmake(version＞2.8.12)编译，同时附带vscode设置文件用于gdb断点调试。
 
 
 - cmake：示例如下
@@ -25,7 +25,7 @@
     ```
 
 - vscode:附带.vscode文件夹示范，用于vscode自动调试。
-    - 配置好vscode-Ｃ++ 环境后,打开本项目;
+    - 配置好vscode-Ｃ++调试环境;
     - Ctrl+Shift+B 生成可执行文件;
     - F5启动断点调试。
 
@@ -41,3 +41,4 @@
 - 2022.06.14 完成pso类初始化;
 - 2022.6.30 pso串行版本完成
 - 2022.7.3 应用cmake管理框架
+- doing :　将程序中pso进行lib分离，编写SA程序

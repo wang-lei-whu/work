@@ -106,8 +106,8 @@ int PSO::run()
 
 MatrixXd toolFunc::rosenBrock(MatrixXd X)
 {
-    cout << "rosenbrock\n"
-         << endl;
+    // cout << "rosenbrock\n"
+    //      << endl;
     // std::cout << X << std::endl;
     MatrixXd term1 = X.col(1) - X.col(0);
     // std::cout << term1 << std::endl;
