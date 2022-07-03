@@ -3,3 +3,4 @@ pso
 **.log
 **.py
 sm_optimized/**
+build/
