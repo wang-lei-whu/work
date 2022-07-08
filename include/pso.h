@@ -25,7 +25,9 @@ public:
     MatrixXd pbest_y;
     MatrixXd gbest_x;
     double gbest_y;
+    int run();
 
+private:
     MatrixXd X;
     MatrixXd Y;
     MatrixXd V;
@@ -35,5 +37,5 @@ public:
     MatrixXd cal_Y();
     void update_pbest();
     void update_gbest();
-    int run();
+
 };

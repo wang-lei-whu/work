@@ -54,6 +54,7 @@ void PSO::update_V()
     MatrixXd r2 = MatrixXd::Random(pop, n_dim).array().abs();
     //速度转移公式
     V = w * V + cp * (r1.cwiseProduct(pbest_x - X)) + cg * (r2.cwiseProduct(gbest_x.replicate(pop, 1) - X));
+    // V = V.cwiseMin(MatrixXd::Constant(pop, n_dim, 2)).cwiseMax(MatrixXd::Constant(pop, n_dim, -2));
 }
 void PSO::update_X()
 {
@@ -91,29 +92,29 @@ int PSO::run()
          << endl;
     for (int iter_num = 0; iter_num < max_iter; iter_num++)
     {        
-        auto t1 = Clock::now(); //计时
+        // auto t1 = Clock::now(); //计时
         update_V();
-        auto t2 = Clock::now(); 
+        // auto t2 = Clock::now(); 
         update_w(iter_num);
-        auto t3 = Clock::now();
+        // auto t3 = Clock::now();
         update_X();
-        auto t4 = Clock::now();
+        // auto t4 = Clock::now();
         cal_Y();
-        auto t5 = Clock::now();
+        // auto t5 = Clock::now();
         update_pbest();
-        auto t6 = Clock::now();
+        // auto t6 = Clock::now();
         update_gbest();
-        auto t7 = Clock::now();
+        // auto t7 = Clock::now();
         if (verbose)
         {
             cout << "Step " << iter_num << " : Best(minimum) value : " << gbest_y << " at " << gbest_x << " \n";
         
-        std::cout <<"it cost: "<< std::chrono::duration_cast<std::chrono::nanoseconds>(t2 - t1).count()/1e+6 <<" ms in update_V();"<< '\n';
-        std::cout <<"it cost: "<< std::chrono::duration_cast<std::chrono::nanoseconds>(t3 - t2).count()/1e+6 <<" ms in update_w();"<< '\n';
-        std::cout <<"it cost: "<< std::chrono::duration_cast<std::chrono::nanoseconds>(t4 - t3).count()/1e+6 <<" ms in update_X();"<< '\n';
-        std::cout <<"it cost: "<< std::chrono::duration_cast<std::chrono::nanoseconds>(t5 - t4).count()/1e+6 <<" ms in cal_Y();"<< '\n';
-        std::cout <<"it cost: "<< std::chrono::duration_cast<std::chrono::nanoseconds>(t6 - t5).count()/1e+6 <<" ms in update_pbest();"<< '\n';
-        std::cout <<"it cost: "<< std::chrono::duration_cast<std::chrono::nanoseconds>(t7 - t6).count()/1e+6 <<" ms in update_gbest();"<< '\n';
+        // std::cout <<"it cost: "<< std::chrono::duration_cast<std::chrono::nanoseconds>(t2 - t1).count()/1e+6 <<" ms in update_V();"<< '\n';
+        // std::cout <<"it cost: "<< std::chrono::duration_cast<std::chrono::nanoseconds>(t3 - t2).count()/1e+6 <<" ms in update_w();"<< '\n';
+        // std::cout <<"it cost: "<< std::chrono::duration_cast<std::chrono::nanoseconds>(t4 - t3).count()/1e+6 <<" ms in update_X();"<< '\n';
+        // std::cout <<"it cost: "<< std::chrono::duration_cast<std::chrono::nanoseconds>(t5 - t4).count()/1e+6 <<" ms in cal_Y();"<< '\n';
+        // std::cout <<"it cost: "<< std::chrono::duration_cast<std::chrono::nanoseconds>(t6 - t5).count()/1e+6 <<" ms in update_pbest();"<< '\n';
+        // std::cout <<"it cost: "<< std::chrono::duration_cast<std::chrono::nanoseconds>(t7 - t6).count()/1e+6 <<" ms in update_gbest();"<< '\n';
         }
     }
 

@@ -61,7 +61,10 @@
         "ranges": "cpp",
         "semaphore": "cpp",
         "stop_token": "cpp",
-        "thread": "cpp"
+        "thread": "cpp",
+        "cholesky": "cpp",
+        "geometry": "cpp",
+        "eigenvalues": "cpp"
     },
     "cSpell.words": [
         "rosenbrock"
