@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 2.8.12)
 project(PSO)
 
+# 子目录
 add_subdirectory(srccuda)
 add_subdirectory(src)
 
@@ -8,6 +9,7 @@ SET(CMAKE_BUILD_TYPE debug)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
+# main中的头文件
 include_directories(
 ${PROJECT_SOURCE_DIR}/include
 )
@@ -15,7 +17,9 @@ include_directories(
 /usr/include/eigen3
 )
 
+# 需要链接的库文件
 set(EXTRA_LIBS ${EXTRA_LIBS} gpu_test pso)
+# 输出文件路径
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
 add_executable(main main.cpp) # 编译可执行程序

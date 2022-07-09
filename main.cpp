@@ -20,7 +20,7 @@ int main()
      for (int i = 0; i < 1; i++)
      {
           // PSO::PSO(MatrixXd (*func)(MatrixXd X), int n_dim, int pop, int max_iter, MatrixXd lb, MatrixXd ub, float w0, float w_min, float c1=0.6, float c2=0.5, bool verbose)
-          PSO pso(toolFunc::rosenBrock, dim, 50, 10, lb, ub, 0.8, 0.3, 0.6, 0.5, false);
+          PSO pso(toolFunc::rosenBrock, dim, 500, 100, lb, ub, 0.8, 0.3, 0.6, 0.5, false);
           pso.run();
           cout << "Best value with PSO:\n"
                << pso.gbest_y

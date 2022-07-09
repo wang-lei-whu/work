@@ -12,8 +12,8 @@ using namespace std;
 int main() 
 {
     // 定义测试矩阵的维度
-    int M = 2;
-    int N = 2;
+    int M = 1;
+    int N = 1;
    
     // 定义状态变量
     cublasStatus_t status;
@@ -80,15 +80,18 @@ int main()
     );
 
     // 将矩阵数据传递进 显存 中已经开辟好了的空间
-    cublasSetVector (
-        N*M,    // 要存入显存的元素个数
-        sizeof(float),    // 每个元素大小
-        h_A,    // 主机端起始地址
-        1,    // 连续元素之间的存储间隔
-        d_A,    // GPU 端起始地址
-        1    // 连续元素之间的存储间隔
-    );
-    cublasSetVector (N*M, sizeof(float), h_B, 1, d_B, 1);
+    // cublasSetVector (
+    //     N*M,    // 要存入显存的元素个数
+    //     sizeof(float),    // 每个元素大小
+    //     h_A,    // 主机端起始地址
+    //     1,    // 连续元素之间的存储间隔
+    //     d_A,    // GPU 端起始地址
+    //     1    // 连续元素之间的存储间隔
+    // );
+    // cublasSetVector (N*M, sizeof(float), h_B, 1, d_B, 1);
+    cudaMemcpy(d_A, h_A, sizeof(float) * M * N, cudaMemcpyHostToDevice);
+    cudaMemcpy(d_B, h_B, sizeof(float) * M * N, cudaMemcpyHostToDevice);
+    cudaMemcpy(d_C, h_C, sizeof(float) * M * M, cudaMemcpyHostToDevice);
 
     // 同步函数
     // cudaThreadSynchronize();
